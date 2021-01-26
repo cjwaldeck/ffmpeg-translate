@@ -17,8 +17,8 @@ SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 CONFIG="$SCRIPTDIR/config"
 DEFAULT_CONFIG="
 COMP_GAIN=1
-COMP_THRESHOLD=0.01
-COMP_RATIO=5
+COMP_THRESHOLD=0.1
+COMP_RATIO=8
 COMP_RELEASE=1000
 COMP_ATTACK=1
 
@@ -54,7 +54,7 @@ Starting translation stream with the following:
 
 ffmpeg -re -i $STREAM_IN -f alsa -i $TRANS_IN -c:v copy -c:a aac -filter_complex \
     "[0:a]asplit[compin][tmon]; \
-     [1:a]loudnorm,adelay=$TRANS_DELAY|$TRANS_DELAY,asplit[sc][tnorm]; \
+     [1:a]agate=ratio=10:threshold=0.05,loudnorm,adelay=$TRANS_DELAY|$TRANS_DELAY,asplit[sc][tnorm]; \
      [compin][sc]sidechaincompress=threshold=$COMP_THRESHOLD:ratio=$COMP_RATIO: \
          level_sc=$COMP_GAIN:release=$COMP_RELEASE:attack=$COMP_ATTACK[compout]; \
      [compout][tnorm]amix" \
