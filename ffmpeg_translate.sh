@@ -59,4 +59,4 @@ ffmpeg -re -i $STREAM_IN -f alsa -i $TRANS_IN -c:v copy -c:a aac -filter_complex
          level_sc=$COMP_GAIN:release=$COMP_RELEASE:attack=$COMP_ATTACK[compout]; \
      [compout][tnorm]amix" \
     -f flv $STREAM_OUT \
-    -map '[tmon]' -f alsa $TRANS_IN
+    -map '[tmon]' -f alsa $TRANS_MON
