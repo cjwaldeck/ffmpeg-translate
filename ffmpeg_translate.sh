@@ -13,11 +13,22 @@ function usage {
 	"
 }
 
+SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+CONFIG="$SCRIPTDIR/config"
+DEFAULT_CONFIG="
 COMP_GAIN=1
 COMP_THRESHOLD=0.01
 COMP_RATIO=5
 COMP_RELEASE=1000
 COMP_ATTACK=1
+"
+
+if [[ ! -f $CONFIG ]]; then
+	echo "Generating default config."
+	echo "$DEFAULT_CONFIG" >> $CONFIG
+fi
+
+. $CONFIG
 
 while [[ "$#" -gt 0 ]]; do
 	case $1 in
