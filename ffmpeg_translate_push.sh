@@ -27,5 +27,5 @@ Starting translation stream with the following:
     Translation input:   $TRANS_IN
 "
 
-ffmpeg -f lavfi -i nullsrc -f alsa -i $TRANS_IN -c:v copy -c:a aac
+ffmpeg -f lavfi -i nullsrc=s=256x256:d=5 -f alsa -i $TRANS_IN -c:v copy -c:a aac
     -filter_complex "[1:a]loudnorm;" -f flv $STREAM_OUT
